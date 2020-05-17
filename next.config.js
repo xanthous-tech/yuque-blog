@@ -1,5 +1,7 @@
 require('dotenv').config();
 
 module.exports = {
-    env: {},
+    env: {
+        yuqueToken: process.env.YUQUE_TOKEN,
+    },
 };

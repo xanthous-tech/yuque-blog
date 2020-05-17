@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint --ext .ts,.tsx ./pages ./components ./lib ./utils ./types --fix",
+    "lint": "eslint --ext .ts,.tsx ./pages ./components ./utils --fix",
     "format": "prettier --write \"./**/*{.ts,.tsx}\"",
     "dev": "next dev",
     "build": "next build",
@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "dotenv": "^8.2.0",
+    "isomorphic-unfetch": "^3.0.0",
     "next": "9.4.0",
+    "node-fetch": "^2.6.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "styled-components": "^5.1.0"
@@ -19,11 +21,11 @@
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
     "@types/node": "12",
+    "@types/node-fetch": "^2.5.7",
     "@types/react": "^16.9.35",
     "@types/styled-components": "^5.1.0",
     "@typescript-eslint/eslint-plugin": "^2.19.0",
     "@typescript-eslint/parser": "^2.19.0",
-    "babel-plugin-import": "^1.13.0",
     "babel-plugin-styled-components": "^1.10.7",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-typescript": "^6.3.1",
@@ -35,6 +37,17 @@
     "lint-staged": "^10.2.2",
     "prettier": "^2.0.5",
     "typescript": "^3.9.2"
+  },
+  "lint-staged": {
+    "./**/*{.ts,.tsx}": [
+      "npm run format",
+      "npm run lint"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "volta": {
     "node": "12.16.3",

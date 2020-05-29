@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import Link from 'next/link';
 import Head from 'next/head';
 import styled from 'styled-components';
@@ -95,7 +95,7 @@ const HomePage: FC<HomePageProps> = ({ repo, docs }: HomePageProps) => (
 
 export default HomePage;
 
-export const getServerSideProps: GetServerSideProps = async (): Promise<{ props: HomePageProps }> => {
+export const getStaticProps: GetStaticProps = async (): Promise<{ props: HomePageProps }> => {
   const api = new YuqueApi(process.env.yuqueToken);
 
   const { data: currentUser } = await api.getUser();

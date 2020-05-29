@@ -9,12 +9,11 @@ import Container from '../../components/Container';
 import SiteHeader from '../../components/SiteHeader';
 import Footer from '../../components/Footer';
 
-import { YuqueApi, Repo, Doc } from '../../utils/yuque-api';
+import { YuqueApi, Doc } from '../../utils/yuque-api';
 
 const CDN_ROOT = 'https://cdn.nlark.com';
 
 interface PostPageProps {
-  repo: Repo;
   doc: Doc;
 }
 
@@ -97,7 +96,7 @@ const PostHeader: FC<PostHeaderProps> = ({ title, date }: PostHeaderProps) => (
   </StyledHeader>
 );
 
-const PostPage: FC<PostPageProps> = ({ repo, doc }: PostPageProps) => {
+const PostPage: FC<PostPageProps> = ({ doc }: PostPageProps) => {
   let __html = doc.body_html.replace(CDN_ROOT, '/api/img');
   __html = sanitizeHtml(__html, {
     allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
@@ -105,9 +104,9 @@ const PostPage: FC<PostPageProps> = ({ repo, doc }: PostPageProps) => {
   return (
     <>
       <Head>
-        <title>{`${doc.title} - ${repo.name}`}</title>
+        <title>{`${doc.title} - ${doc.book.name}`}</title>
       </Head>
-      <SiteHeader siteTitle={repo.name} />
+      <SiteHeader siteTitle={doc.book.name} />
       <PostContainer>
         <PostHeader title={doc.title} date={doc.created_at} />
         <div dangerouslySetInnerHTML={{ __html }} />
@@ -129,7 +128,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const paths: Array<{ params: { [key: string]: string | string[] } }> = docs
     .filter((doc) => doc.status === 1)
-    .map((doc) => ({ params: { slug: doc.slug } }));
+    .map((doc) => ({ params: { namespace: blogRepo.namespace, slug: doc.slug } }));
 
   return {
     paths,
@@ -137,21 +136,23 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params: { slug } }): Promise<{ props: PostPageProps }> => {
+export const getStaticProps: GetStaticProps = async ({ params: { namespace, slug } }): Promise<{ props: PostPageProps }> => {
   const api = new YuqueApi(process.env.yuqueToken);
 
-  const { data: currentUser } = await api.getUser();
-  const { data: repos } = await api.getRepos(currentUser.login);
-  const [blogRepo] = repos.filter((repo) => repo.slug === 'blog');
+  let _namespace = namespace as string;
 
-  const { namespace } = blogRepo;
+  if (!_namespace) {
+    const { data: currentUser } = await api.getUser();
+    const { data: repos } = await api.getRepos(currentUser.login);
+    const [blogRepo] = repos.filter((repo) => repo.slug === 'blog');
 
-  const { data: doc } = await api.getDoc(namespace, slug as string);
-  console.log(doc);
+    _namespace = blogRepo.namespace;
+  }
+
+  const { data: doc } = await api.getDoc(_namespace, slug as string);
 
   return {
     props: {
-      repo: blogRepo,
       doc,
     },
   };

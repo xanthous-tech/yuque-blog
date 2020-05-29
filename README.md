@@ -1,30 +1,19 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
+# 语雀NextJS博客
 
-## Getting Started
+这个博客生成器利用了 [语雀API](https://www.yuque.com/yuque/developer/api) 和 [NextJS的SSG功能](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation) 搭建，搭建部署之后不需要额外进行更新，只需要在语雀发布文章即可更新。
 
-First, run the development server:
+这个博客的样式参考了 [etch主题](https://github.com/LukasJoswiak/etch) 。如果需要进行修改，可以使用 `styled-components` 自行替换对应的组件。
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+# Demo
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+https://yuque-blog.now.sh
 
-You can start editing the page by modifying `pages/index.ts`. The page auto-updates as you edit the file.
+# 本地开发
 
-## Learn More
+# 部署
 
-To learn more about Next.js, take a look at the following resources:
+推荐使用 [Vercel](https://vercel.com) （原Zeit NOW）进行部署。也可以选用 [腾讯云](https://github.com/serverless-components/tencent-nextjs) 或者 [阿里云](https://developer.aliyun.com/article/703315) 部署。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# 开源证书
 
-You can check out [the Next.js GitHub repository](https://github.com/zeit/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[MIT](./LICENSE)

@@ -129,6 +129,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const api = new YuqueApi(process.env.yuqueToken);
 
   const { data: currentUser } = await api.getUser();
+  console.log(currentUser);
   const { data: repos } = await api.getRepos(currentUser.login);
   const [blogRepo] = repos.filter((repo) => repo.slug === 'blog');
   const { data: docs } = await api.getDocs(blogRepo.namespace);

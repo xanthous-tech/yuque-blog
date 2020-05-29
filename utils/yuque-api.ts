@@ -112,14 +112,11 @@ export class YuqueApi {
   }
 
   private async getResult<T>(path: string, options: RequestInit = {}): Promise<YuquePayload<T>> {
-    const response = await fetch(
-      `${API_ROOT}${path}`,
-      {
-        method: 'GET',
-        headers: this.headers,
-        ...options,
-      },
-    );
+    const response = await fetch(`${API_ROOT}${path}`, {
+      method: 'GET',
+      headers: this.headers,
+      ...options,
+    });
     return response.json();
   }
 }

@@ -21,6 +21,8 @@ https://yuque-blog.now.sh
 
 # 部署
 
+[![Deploy to Vercel](/button)](https://vercel.com/import/project?template=https://github.com/xanthous-tech/yuque-blog/tree/master)
+
 推荐使用 [Vercel](https://vercel.com) （原Zeit NOW）进行部署。也可以选用 [腾讯云](https://github.com/serverless-components/tencent-nextjs) 或者 [阿里云](https://developer.aliyun.com/article/703315) 部署。
 
 部署时候需要根据云平台把语雀的API Token写到 `YUQUE_TOKEN` 的环境变量里。

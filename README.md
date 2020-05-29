@@ -27,7 +27,7 @@ https://yuque-blog.now.sh
 
 部署时候需要根据云平台把语雀的API Token写到 `YUQUE_TOKEN` 的环境变量里。
 
-# Deploy Hook
+# 通过Webhook部署更新内容
 
 如果使用Vercel，或者其他支持Deploy Hook的云平台，推荐把 [博客知识库的Webhook](https://www.yuque.com/yuque/developer/doc-webhook) 配置成Deploy Hook。这样文章发布的时候可以自动部署。
 

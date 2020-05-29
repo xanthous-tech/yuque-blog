@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import moment from 'moment-timezone';
 import sanitizeHtml from 'sanitize-html';
@@ -97,6 +98,12 @@ const PostHeader: FC<PostHeaderProps> = ({ title, date }: PostHeaderProps) => (
 );
 
 const PostPage: FC<PostPageProps> = ({ doc }: PostPageProps) => {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
   let __html = doc.body_html.replace(CDN_ROOT, '/api/img');
   __html = sanitizeHtml(__html, {
     allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),

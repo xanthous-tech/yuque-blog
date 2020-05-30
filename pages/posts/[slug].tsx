@@ -106,7 +106,7 @@ const PostPage: FC<PostPageProps> = ({ doc }: PostPageProps) => {
 
   let __html = doc.body_html.replace(CDN_ROOT, '/api/img');
   __html = sanitizeHtml(__html, {
-    allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat(['h1', 'h2', 'img']),
   });
   return (
     <>

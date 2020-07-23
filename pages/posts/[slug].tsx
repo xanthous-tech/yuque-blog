@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import moment from 'moment-timezone';
 import sanitizeHtml from 'sanitize-html';
+import parse from 'html-react-parser';
+import Highlight from 'react-highlight';
 
 import Container from '../../components/Container';
 import SiteHeader from '../../components/SiteHeader';
@@ -51,7 +53,7 @@ const PostContainer = styled(Container)`
   }
 
   pre code {
-    padding: 0;
+    padding: 10px;
   }
 
   @media (min-width: 770px) {
@@ -105,8 +107,22 @@ const PostPage: FC<PostPageProps> = ({ doc }: PostPageProps) => {
   }
 
   let __html = doc.body_html.replace(CDN_ROOT, '/api/img');
+  // console.log(__html);
   __html = sanitizeHtml(__html, {
     allowedTags: sanitizeHtml.defaults.allowedTags.concat(['h1', 'h2', 'img']),
+    allowedAttributes: Object.assign(sanitizeHtml.defaults.allowedAttributes, {
+      div: (sanitizeHtml.defaults.allowedAttributes.div || []).concat(['data-language']),
+    }),
+  });
+  const blog = parse(__html, {
+    replace: (domNode: any) => {
+      if (domNode.attribs && 'data-language' in domNode.attribs) {
+        // console.log(domNode);
+        const textNode = domNode.children[0].children[0].children[0].children[0];
+        // console.log(textNode);
+        return <Highlight className={domNode.attribs['data-language']}>{textNode.data}</Highlight>;
+      }
+    },
   });
   return (
     <>
@@ -116,7 +132,8 @@ const PostPage: FC<PostPageProps> = ({ doc }: PostPageProps) => {
       <SiteHeader siteTitle={doc.book.name} />
       <PostContainer>
         <PostHeader title={doc.title} date={doc.created_at} />
-        <div dangerouslySetInnerHTML={{ __html }} />
+        {/* <div dangerouslySetInnerHTML={{ __html }} /> */}
+        {blog}
       </PostContainer>
       <Footer />
     </>
